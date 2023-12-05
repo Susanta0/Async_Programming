@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS TIMER</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color:azure;
+        }
+        .board{
+            width: fit-content;
+            margin: 20px auto;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+        }
+        h1{
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 45px;
+            color: gold;
+            margin: auto;
+            width: fit-content;
+            box-shadow: 5px 5px 8px blue, 10px 10px 8px red, 15px 15px 8px green;
+
+        }
+        .main{
+            font-size: 40px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-weight: 600;
+            font-family: sans-serif;
+            color: rebeccapurple;
+            margin-top: 50px;
+        }
+        input{
+            width: 80px;
+            height: fit-content;
+            text-align: center;
+            font-size: 30px;
+            font-weight: 700;
+            margin: 0px 25px 0px 5px;
+            border: none;
+            background-color: cornsilk;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+                -webkit-appearance: none;   
+        }
+        .main2{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10%;
+            margin-top: 25px;
+            
+        }
+        button{
+            font-size: 25px;
+            width: 100px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            background-color: #5b5151;
+            color: #fff;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+        }
+        button:first-child:hover{
+            background-color:aqua;
+            color:coral;
+        }
+        button:nth-child(2):hover{
+            background-color:darkorange;
+            color: red;
+        }
+        button:last-child:hover{
+            background-color: bisque;
+            color: crimson;
+        }
+    </style>
+</head>
+<body>
+    <div class="board">
+        <h1>JS TIMER</h1>
+        <div class="main">
+            <label>Hours</label>
+            <input type="number" id="hours" min="0" value="0">
+            <label>Minutes</label>
+            <input type="number" id="minutes" min="0" value="0">
+            <label>Seconds</label>
+            <input type="number" id="seconds" min="0" value="0">
+        </div>
+        <div class="main2">
+            <button onclick="start()">Start</button>
+            <button onclick="pause()">Pause</button>
+            <button onclick="reset()">Reset</button>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    let totalSecond;
+    let id;
+    let flag=true
+    // start function.............................
+    function start(){
+        if(!flag){
+            return;
+        }
+        totalSecond = 
+        Number(document.getElementById("hours").value) * 3600 +
+        Number(document.getElementById("minutes").value)*60 +
+        Number(document.getElementById("seconds").value);
+
+        if(totalSecond<=0){
+            alert("Please enter a valid time 🫤")
+            return
+        }
+
+        id=setInterval(updateTime,1000)
+        flag = false;
+    }
+    function updateTime(){
+        if(totalSecond<=0){
+            clearInterval(id)
+            alert("Time is up 👍")
+            return
+        }
+
+        let hours = Math.floor(totalSecond / 3600)
+        let minutes = Math.floor((totalSecond % 3600) / 60)
+        let seconds = totalSecond % 60
+
+        document.getElementById("hours").value = hours
+        document.getElementById("minutes").value = minutes
+        document.getElementById("seconds").value = seconds
+
+       totalSecond--
+    }
+    // pause function...........................
+    function pause(){
+        // if(updateTime){
+        //     clearTimeout(id)
+        // }
+        if(!flag){
+            clearTimeout(id)
+            flag = true;
+        }
+    }
+    // reset function...........................
+    function reset(){
+        if(id){
+            clearInterval(id)
+            document.getElementById("hours").value = 0
+            document.getElementById("minutes").value = 0
+            document.getElementById("seconds").value = 0
+            flag = true;
+        }
+    }
+</script>
