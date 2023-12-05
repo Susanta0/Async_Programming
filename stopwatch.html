@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Js Stopwatch</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            background-color: antiquewhite;
+        }
+        .board{
+            width: fit-content;
+            margin: 20px auto;
+            padding: 50px;
+            border-radius: 5px;
+            box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+        }
+        h2{
+            width: fit-content;
+            margin: 0px auto;
+            font-size: 26px;
+            color:darkgreen;
+            box-shadow: 5px 5px 8px blue, 10px 10px 8px red, 15px 15px 8px green;
+        }
+        .main{
+            width: fit-content;
+            margin: 20px auto;
+            display: flex;  
+        }
+        span{
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            margin-left: -15px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            
+        }
+        input{
+            width: 60px;
+            text-align: center;
+            margin: 20px 20px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border: none;
+            background-color: cornsilk;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+                -webkit-appearance: none;   
+        }
+        .main2{
+            width: fit-content;
+            margin: auto;
+        }
+        button{
+            margin: 0px 30px;
+            width: 80px;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+        button:first-child:hover{
+            background-color:crimson;
+            color:cornflowerblue;
+        }
+        button:nth-child(2):hover{
+            background-color:dodgerblue;
+            color:indigo;
+        }
+        button:last-child:hover{
+            background-color:darkblue;
+            color:deeppink;
+        }
+    </style>
+</head>
+<body>
+    <div class="board">
+        <h2>JS STOPWATCH</h2>
+        <div class="main">
+            <input type="number" value="0" min="0" id="hours"><span id="hours-text"></span>
+            <input type="number" value="0" min="0" id="minutes"><span id="minutes-text"></span>
+            <input type="number" value="0" min="0" id="seconds"><span id="seconds-text"></span>
+
+        </div>
+        <div class="main2">
+            <button onclick="start()">Start</button>
+            <button onclick="pause()">Pause</button>
+            <button onclick="reset()">Reset</button>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    let totalSecond;
+    let id;
+    let flag=true
+    // start function.............................
+    function start(){
+        if(!flag){
+            return;
+        }
+        totalSecond=
+        Number(document.getElementById("hours").value) * 3600 +
+        Number(document.getElementById("minutes").value) * 60 +
+        Number(document.getElementById("seconds").value);
+
+        id=setInterval(runingTime,1000)
+        flag = false;
+    } 
+
+    function runingTime(){
+        let hours = Math.floor(totalSecond / 3600)
+        let minutes = Math.floor((totalSecond % 3600) / 60)
+        let seconds = totalSecond % 60
+
+        document.getElementById("hours").value = hours
+        document.getElementById("minutes").value = minutes
+        document.getElementById("seconds").value = seconds
+
+        if(document.getElementById("hours").value = hours){
+            document.getElementById("hours-text").textContent = "hrs";
+        }if(document.getElementById("minutes").value = minutes) {
+            document.getElementById("minutes-text").textContent = "min";
+        }if(document.getElementById("seconds").value = seconds){
+            document.getElementById("seconds-text").textContent = "sec";
+        }
+       totalSecond++
+    }
+    // pause function...........................
+    function pause(){
+        if(!flag){
+            clearTimeout(id)
+            flag = true;
+        }
+    }
+    // reset function...........................
+    function reset(){
+        if(id){
+            clearInterval(id)
+            document.getElementById("hours").value = 0
+            document.getElementById("minutes").value = 0
+            document.getElementById("seconds").value = 0
+
+
+            document.getElementById("hours-text").textContent = "";
+            document.getElementById("minutes-text").textContent = "";
+            document.getElementById("seconds-text").textContent = "";
+
+            flag=true;
+        }
+    }
+</script>
